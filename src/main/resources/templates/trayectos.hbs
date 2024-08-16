@@ -1,0 +1,351 @@
+{{#partial "contenido"}}
+<div class="section">
+    <h5>Ultimos trayectos</h5>
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-registrar-trayectos">
+            <thead>
+                <tr>
+                    <th scope="col" class="hide-column">idTrayecto</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col" class="hide-column">idOrigen</th>
+                    <th scope="col">Origen</th>
+                    <th scope="col" class="hide-column">idDestino</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Tramos</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each trayectos}}
+                <tr>
+                    <td id="idTrayecto-{{@index}}" class="hide-column">{{id_trayecto}}</td>
+                    <td id="nombre-{{@index}}">{{nombreTrayecto}}</td>
+                    <td id="idOrigen-{{@index}}" class="hide-column">{{origenId}}</td>
+                    <td id="origen-{{@index}}">{{origenNombre}}</td>
+                    <td id="idDestino-{{@index}}" class="hide-column">{{destinoId}}</td>
+                    <td id="destino-{{@index}}">{{destinoNombre}}</td>
+                    <td>
+                        <button id="verTramos-{{@index}}-{{id_trayecto}}" type="button" class="btn btn-outline-success btn-sm ver-tramos" data-bs-toggle="modal" data-bs-target="#modalVerTramos">Ver</button></td>
+                    <td>
+                        <button id="editTray-{{@index}}" type="button" class="bi bi-pencil btn btn-outline-primary btn-sm editar-trayecto"></button>
+                        <button id="delTray-{{@index}}"  type="button" class="bi bi-trash  btn btn-outline-danger  btn-sm borrar-trayecto"></button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <button type="button" id="agregarTrayecto" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalNuevoTrayecto">Nuevo trayecto</button>
+</div>
+{{/partial}}
+
+{{#partial "modals"}}
+<!--MODAL NUEVO TRAYECTO-->
+<div class="modal fade" id="modalNuevoTrayecto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNuevoTrayecto" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo trayecto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="frmTrayecto" action="/trayectos/crear" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="trayecto-nombre" class="form-label"><strong>Nombre del Trayecto</strong></label>
+                            <input id="trayecto-nombre" type="text" name="trayecto-nombre" class="form-control" placeholder="Viaje a casa" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="trayecto-origen" class="form-label"><strong>Origen</strong></label>
+                        <div class="col-md-10 col-xs-8">
+                            <select id="trayecto-origen" name="trayecto-origen" class="form-select">
+                                <option selected disabled>Seleccionar ubicacion</option>
+                                {{#each ubicacionesEmpleado}}
+                                <option value="{{id_ubicacion}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-xs-4">
+                            <a class="btn btn-outline-success bi bi-plus-lg" href="/ubicaciones"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <label for="trayecto-destino" class="form-label"><strong>Destino</strong></label>
+                        <div class="col-md-10 col-xs-8">
+                            <select id="trayecto-destino" name="trayecto-destino" class="form-select">
+                                <option selected disabled>Seleccionar ubicacion</option>
+                                {{#each ubicacionesEmpleado}}
+                                    <option value="{{id_ubicacion}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-xs-4">
+                            <a class="btn btn-outline-success bi bi-plus-lg" href="/ubicaciones"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                    <button type="submit" class="btn btn-success" >Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--MODAL NUEVO TRAYECTO-->
+
+<!--MODAL VER TRAMOS-->
+<div class="modal fade" id="modalVerTramos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalVerTramos" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content section">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver tramos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="table-organizations">
+                        <thead>
+                            <tr>
+                                <th scope="col">Origen</th>
+                                <th scope="col">Destino</th>
+                                <th scope="col">Medio de Transporte</th>
+                                <th scope="col">Distancia</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaTramos">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="tramosCompartidos" class="btn btn-success">Agregar tramos compartidos</button>
+                <button type="button" id="nuevoTramo" class="btn btn-success">Nuevo tramo</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL VER TRAMOS-->
+
+<!--MODAL AGREGAR TRAMOS COMPARTIDOS-->
+<div class="modal fade" id="modalTramosCompartidos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTramosCompartidos" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tramos compartidos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Origen</th>
+                            <th scope="col">Destino</th>
+                            <th scope="col">Acompañante/s</th>
+                            <th scope="col">Medio de Transporte</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-tramos-compartidos">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-target="#modalVerTramos" data-bs-toggle="modal">Volver</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!--MODAL AGREGAR TRAMOS COMPARTIDOS-->
+
+<!--MODAL NUEVO TRAMO-->
+<div class="modal fade" id="modalNuevoTramo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNuevoTramo" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo tramo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+
+                        <div class="row">
+                            <label for="organizacion-responsable" class="form-label"><strong>Organización responsable</strong></label>
+                            <div class="col-md-12">
+                                <select id="organizacion-responsable" class="form-select select-modal-tramo" name="organizacion-responsable">
+                                    <option value="-1" selected disabled>Seleccionar...</option>
+                                    {{#each organizaciones}}
+                                        <option value="{{id_organizacion}}">{{razonSocial}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="medio-transporte" class="form-label"><strong>Medio de Transporte</strong></label>
+                                <select id="medio-transporte" class="form-select select-modal-tramo" name="medio-transporte" required>
+                                    <option selected disabled value="-1">Seleccionar...</option>
+                                    <option value="bp">Bici/Pie</option>
+                                    <option value="vp">Vehiculo Particular</option>
+                                    <option value="tp">Transporte Publico</option>
+                                    <option value="sc">Servicio Contratado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row tramo-origen">
+                            <label for="tramo-origen" class="form-label"><strong>Origen</strong></label>
+                            <div class="col-md-10 col-xs-8">
+                                <select id="tramo-origen" class="form-select select-modal-tramo" name="tramo-origen">
+                                    <option value="-1" selected disabled>Seleccionar ubicacion</option>
+                                    {{#each ubicacionesEmpleado}}
+                                        <option value="{{id_ubicacion}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-xs-4">
+                                <a class="btn btn-outline-success bi bi-plus-lg" href="/ubicaciones"></a>
+                            </div>
+                        </div>
+
+                        <div class="row tramo-destino">
+                            <label for="tramo-destino" class="form-label"><strong>Destino</strong></label>
+                            <div class="col-md-10 col-xs-8">
+                                <select id="tramo-destino" class="form-select select-modal-tramo" name="tramo-destino">
+                                    <option selected disabled value="-1">Seleccionar ubicacion</option>
+                                    {{#each ubicacionesEmpleado}}
+                                        <option value="{{id_ubicacion}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-xs-4">
+                                <a class="btn btn-outline-success bi bi-plus-lg" href="/ubicaciones"></a>
+                            </div>
+                        </div>
+
+                        <!--VEHICULO PARTICULAR-->
+                        <div class="vehiculo-particular">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <label for="tipo-vehiculo" class="form-label"><strong>Tipo Vehiculo</strong></label>
+                                    <select id="tipo-vehiculo" class="form-select" name="tipo-vehiculo" required>
+                                        <option selected disabled value="-1">Seleccionar...</option>
+                                        {{#each tipoVehiculo}}
+                                            <option value="{{id}}">{{vehiculo}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <label for="tipo-combustible" class="form-label"><strong>Tipo Combustible</strong></label>
+                                    <select id="tipo-combustible" class="form-select" name="tipo-combustible" required>
+                                        <option selected disabled value="-1">Seleccionar...</option>
+                                        {{#each tipoCombustible}}
+                                            <option value="{{id}}">{{combustible}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="capacidad-vehiculo-particular" class="form-label"><strong>Capacidad del vehiculo</strong></label>
+                                    <input id="capacidad-vehiculo-particular" type="text" name="capacidad-vehiculo-particular" class="form-control input-texto" placeholder="4">
+                                </div>
+                            </div>
+                        </div>
+                        <!--VEHICULO PARTICULAR-->
+
+                        <!--TRANSPORTE PUBLICO-->
+                        <div class="row transporte-publico">
+                            <div class="col-md-6">
+                                <label for="tipo-transporte" class="form-label"><strong>Tipo de Transporte Público</strong></label>
+                                <select id="tipo-transporte" class="form-select select-modal-tramo" required>
+                                    <option selected disabled value="-1">Seleccionar...</option>
+                                    {{#each tipoTransportePublico}}
+                                        <option value="{{id}}">{{transporte}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="linea-transporte" class="form-label"><strong>Linea</strong></label>
+                                <select id="linea-transporte" class="form-select select-modal-tramo" name="linea-transporte" required>
+                                    <option selected disabled value="-1">Seleccionar...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row transporte-publico">
+                            <div class="col-md 6">
+                                <label for="parada-origen" class="form-label"><strong>Parada Origen</strong></label>
+                                <select id="parada-origen" class="form-select" name="parada-origen">
+                                    <option selected disabled value="-1">Seleccionar ubicacion</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="parada-destino" class="form-label"><strong>Parada Destino</strong></label>
+                                <select id="parada-destino" class="form-select" for="parada-destino" name="parada-destino">
+                                    <option selected disabled value="-1">Seleccionar ubicacion</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--TRANSPORTE PUBLICO-->
+
+                        <!--SERVICIO CONTRATADO-->
+                        <div class="servicio-contratado">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="servicio-contratado" class="form-label"><strong>Tipo de Servicio Contratado</strong></label>
+                                    <select id="servicio-contratado" class="form-select select-modal-tramo" name="servicio-contratado">
+                                        <option selected disabled value="-1">Seleccionar...</option>
+                                        {{#each tipoServiciosContratados}}
+                                            <option value="{{id_tipoDeServicioContratado}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="capacidad-servicio-contratado" class="form-label"><strong>Capacidad del servicio</strong></label>
+                                    <input id="capacidad-servicio-contratado" type="text" name="capacidad-cervicio-contratado" class="form-control input-texto" placeholder="4">
+                                </div>
+                            </div>
+                        </div>
+                        <!--SERVICIO CONTRATADO-->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-target="#modalVerTramos" data-bs-toggle="modal">Volver</button>
+                    <button id="guardarTramo" class="btn btn-success">Guardar</button>
+                </div>
+        </div>
+    </div>
+</div>
+<!--MODAL NUEVO TRAMO-->
+
+<!--MODAL ELIMINAR TRAYECTO-->
+<div class="modal fade" id="modalEliminarTrayecto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea eliminar el trayecto <strong id="nombre-trayecto-eliminar"></strong>?
+            </div>
+            <div class="modal-footer">
+                <form id="frmEliminar" action="" method="POST">
+                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR TRAYECTO-->
+{{/partial}}
+{{> base.hbs}}

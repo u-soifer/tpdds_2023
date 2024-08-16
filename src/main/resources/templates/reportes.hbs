@@ -1,0 +1,96 @@
+{{#partial "contenido"}}
+
+{{#if reporte}}
+<div class="tabla-obtener-reporte">
+    <h5>Complete los datos para obtener el Reporte: </h5>
+    <a id="nombre_reporte" value="{{nombre_reporte}}" class="reporte_id">{{nombre_reporte}}</a>
+</div>
+<form method="POST" class="tabla-obtener-reporte">
+    <select id="reporte_seleccionado" name="reporte_seleccionado" class="form-select">
+        <option value="default" selected disabled>Elegir Reporte...</option>
+        <option value="st">HC por Sector Territorial</option>
+        <option value="to">HC por Tipo de Organizacion</option>
+        <option value="cst">Composicion de HC por Sector Territorial</option>
+        <option value="cnp">Composicion de HC nivel Pais</option>
+        <option value="co">Composicion de HC de una Organizacion</option>
+        <option value="est">Evolucion de HC de un Sector Territorial</option>
+        <option value="eo">Evolucion de HC de una Organizacion</option>
+    </select>
+    <br>
+    <label class="sector-territorial">Seleccione un Sector Territorial</label>
+    <select name="sector_territorial" class="form-select sector-territorial">
+        <option selected disabled>Seleccionar...</option>
+        {{#each sectores}}
+        <option name="sector_territorial" value="{{id_sectorTerritorial}}">{{municipio.nombre}}{{provincia.nombre}}</option>
+        {{/each}}
+    </select>
+    <br class="sector-territorial">
+    <label class="organizacion">Seleccione una Organizacion</label>
+    <select name="organizacion" class="form-select organizacion">
+        <option selected disabled>Seleccionar...</option>
+        {{#each organizaciones}}
+        <option name="organizacion" value="{{id_organizacion}}">{{razonSocial}}</option>
+        {{/each}}
+    </select>
+    <br class="organizacion">
+    <label class="pais">Seleccione un Pais</label>
+    <select name="pais" class="form-select pais">
+        <option selected disabled>Seleccionar...</option>
+        {{#each paises}}
+        <option name="pais" value="{{id}}">{{nombre}}</option>
+        {{/each}}
+    </select>
+    <br class="pais">
+    <label class="fecha-inicio">Seleccione fecha de inicio</label>
+    <select name="fecha_inicio" class="form-select fecha-inicio">
+        <option selected disabled>Seleccionar...</option>
+        {{#each periodos}}
+        <option name="fecha_inicio">{{this}}</option>
+        {{/each}}
+    </select>
+    <br class="fecha-inicio">
+    <label class="fecha-fin">Seleccione fecha de fin</label>
+    <select name="fecha_fin" class="form-select fecha-fin">
+        <option selected disabled>Seleccionar...</option>
+        {{#each periodos}}
+        <option name="fecha_fin">{{this}}</option>
+        {{/each}}
+    </select>
+    <br class="fecha-fin">
+    <button type="submit" class="btn btn-success ver-reporte">Obtener Reporte</button>
+</form>
+
+{{else}}
+<div class="tabla-reporte">
+    <div class="section">
+        <div class="table-responsive">
+        <a id="nombre_reporte" value="{{nombre_reporte}}" class="reporte_id">{{nombre_reporte}}</a>
+            <table class="table table-hover" id="table-organizations">
+                <thead>
+                    <tr>
+                        <th scope="col" class="reporte_st">Sector Territorial</th>
+                        <th scope="col" class="reporte_to">Tipo de Organizacion</th>
+                        <th scope="col" class="reporte_pr">Provincia</th>
+                        <th scope="col" class="reporte_pe">Periodo</th>
+                        <th scope="col" class="reporte_m">Medida</th>
+                        <th scope="col">Huella de Carbon (HC)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each datosReporte}}
+                    <tr>
+                        <td id="nombre-{{@index}}" class="objetos">{{value0}}</td>
+                        <td id="valor-{{@index}}" class="valores">{{value1}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-success" onclick="obtenerReporte()">Ver grafico</button>
+    </div>
+    <canvas id="grafico" width="200" height="200"></canvas>
+</div>
+{{/if}}
+
+{{/partial}}
+{{> base.hbs}}

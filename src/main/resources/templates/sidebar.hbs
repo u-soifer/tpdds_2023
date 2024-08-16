@@ -1,0 +1,26 @@
+{{#if empleado}}
+<a id="menu-inicio"         href="/trabajos"><i class="bi bi-house-door-fill"></i> Inicio</a>
+<a id="menu-trayectos"      href="/trayectos"><i class="bi bi-pencil"></i> Registrar trayectos</a>
+<a id="menu-ubicaciones"    href="/ubicaciones"><i class="bi bi-geo-alt-fill"></i></i> Ubicaciones</a>
+<a id="menu-calculadora-hc" href="/calculadora-hc"><i class="bi bi-calculator"></i> Calculadora de HC</a>
+{{/if}}
+
+{{#if organizacion}}
+<a id="menu-organizacion"   href="/organizacion"><i class="bi bi-tools"></i> Mi organizaci&oacuten</a>
+<a id="menu-mediciones"    href="/mediciones"><i class="bi bi-pen-fill"></i> Mediciones</a>
+<a id="menu-vinculacion"    href="/vinculacion"><i class="bi bi-link"></i> Aceptar vinculaci&oacuten de trabajadores</a>
+<a id="menu-contactos"      href="/contactos"><i class="bi bi-phone"></i> Contactos</a>
+<a id="menu-calculadora-hc" href="/calculadora-hc"><i class="bi bi-calculator"></i> Calculadora de HC</a>
+{{/if}}
+
+{{#if agenteSectorial}}
+<a id="menu-sector"   href="../mi-sector-territorial"><i class="bi bi-flag-fill"></i> Mi sector territorial</a>
+<a id="menu-reportes" href="../reportes"><i class="bi bi-people-fill"></i> Reportes</a>
+{{/if}}
+
+{{#if administrador}}
+<a id="menu-agentes-sectoriales" href="/agentes-sectoriales"><i class="bi bi-flag-fill"></i> Agentes Sectoriales</a>
+<a id="menu-organizaciones"      href="/organizaciones"><i class="bi bi-inboxes-fill"></i> Organizaciones</a>
+<a id="menu-consumos"            href="/consumos"><i class="bi bi-gear"></i> Consumos</a>
+<a id="menu-medios-de-transporte" href="/medios-de-transporte"><i class="bi bi-car-front"></i> Medios de Transporte</a>
+{{/if}}

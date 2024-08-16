@@ -1,0 +1,193 @@
+{{#partial "contenido"}}
+<div class="section">
+    <h5>Mis Áreas</h5>
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-organizations">
+            <thead>
+                <tr>
+                    <th scope="col">Área</th>
+                    <th scope="col">Empleados</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#each areas}}
+                <tr>
+                    <td id="idArea-{{@index}}" class="hide-column">{{idArea}}</td>
+                    <td id="nombreArea-{{@index}}">{{nombreArea}}</td>
+                    <td>
+                        <button id="verEmpleados-{{@index}}-{{idArea}}" type="button" class="btn btn-outline-success btn-sm ver-empleados" data-bs-toggle="modal" data-bs-target="#modalVerEmpleados">Ver Empleados</button></td>
+                    </td>
+                    <td>
+                        <button type="button" id="edit-{{@index}}" class="bi bi-pencil btn btn-outline-primary btn-sm edit-area" ></button>
+                        <button type="button" id="del-{{@index}}" class="bi bi-trash btn btn-outline-danger btn-sm del-area" ></button>
+                    </td>
+                </tr>
+            {{/each}}
+            <tr>
+                <td id="ubi-idUbicacion" class="hide-column">{{ubicacion.id_ubicacion}}</td>
+                <td id="ubi-nombre" class="hide-column">{{ubicacion.nombre}}</td>
+                <td id="ubi-idPais" class="hide-column">{{ubicacion.idPais}}</td>
+                <td id="ubi-pais" class="hide-column">{{ubicacion.paisDet}}</td>
+                <td id="ubi-idProvincia" class="hide-column">{{ubicacion.idProvincia}}</td>
+                <td id="ubi-provincia"class="hide-column">{{ubicacion.provinciaDet}}</td>
+                <td id="ubi-idMunicipio" class="hide-column">{{ubicacion.idMunicipio}}</td>
+                <td id="ubi-municipio" class="hide-column">{{ubicacion.municipioDet}}</td>
+                <td id="ubi-idLocalidad" class="hide-column">{{ubicacion.idLocalidad}}</td>
+                <td id="ubi-localidad" class="hide-column">{{ubicacion.localidadDet}}</td>
+                <td id="ubi-calle" class="hide-column">{{ubicacion.calle}}</td>
+                <td id="ubi-altura" class="hide-column">{{ubicacion.altura}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button id="agregar-area" type="button" class="btn btn-success"> Agregar Área </button>
+</div>
+<button id="edit-ubicacion" type="button" class="btn btn-success">Ubicacion</button>
+{{/partial}}
+
+
+{{#partial "modals"}}
+
+<!--MODAL AGREGAR/EDITAR AREA-->
+<div class="modal fade" id="modalAreas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Agregar Área</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/organizacion" method="post" id="frmOrganizacion">
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input name="nombre" id="nombre" type="text" class="form-control input-texto" placeholder="Nombre del Área" aria-label="Nombre del Área" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--MODAL AGREGAR/EDITAR AREA-->
+
+<!--MODAL ELIMINAR AREA-->
+<div class="modal fade" id="modalEliminarArea" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEliminarArea" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar area</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea eliminar el área?
+            </div>
+            <div class="modal-footer">
+                <form id="frmEliminar" action="/organizacion/eliminar/" method="POST">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL ELIMINAR AREA-->
+
+<!--MODAL VER EMPLEADOS-->
+<div class="modal fade" id="modalVerEmpleados" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalVerEmpleados" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content section">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver empleados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="table-organizations">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre y Apellido</th>
+                            <th scope="col">Documento</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablaEmpleados">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL VER EMPLEADOS-->
+
+
+<!--MODAL UBICACION-->
+<div class="modal fade" id="modalUbicacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalUbicacion" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ubicacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/organizacion" method="post" id="frmUbicacion">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="pais" class="form-label">Pais</label>
+                            <select id="pais" name="pais" class="form-select" aria-label="Default select" required>
+                                <option selected disabled>Pais</option>
+                                {{#each paises}}
+                                    <option value="{{id}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="provincia" class="form-label">Provincia</label>
+                            <select id="provincia" name="provincia" class="form-select" aria-label="Default select" required>
+                                <option selected>Provincia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="municipio" class="form-label">Municipio</label>
+                            <select id="municipio" name="municipio" class="form-select" aria-label="Default select" required>
+                                <option selected>Municipio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="localidad" class="form-label">Localidad</label>
+                            <select id="localidad" name="localidad" class="form-select" aria-label="Default select" required>
+                                <option selected>Localidad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label for="calle" class="form-label">Calle</label>
+                            <input id="calle" type="text" name="calle" class="form-control input-texto" placeholder="Avenida Medrano" required>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="altura" class="form-label">Altura</label>
+                            <input id="altura" type="text" name="altura" class="form-control input-texto" placeholder="951" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--MODAL UBICACION-->
+
+{{/partial}}
+{{> base.hbs}}

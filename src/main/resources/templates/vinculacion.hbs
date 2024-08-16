@@ -1,0 +1,50 @@
+{{#partial "contenido"}}
+    <!--MI APP-->
+    <div class="section">
+        <h5>Solicitudes de Vinculación</h5>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Área</th>
+                        <th scope="col">Respuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form action="/vinculacion" method="POST" id="frmVinculacion">
+                        {{#each solicitudes}}
+                        <tr>
+                            <td id="vinculacion-idTrabajo-{{@index}}" class="hide-column">{{idTrabajo}}</td>
+                            <td id="vinculacion-idEmpleado-{{@index}}" class="hide-column">{{idEmpleado}}</td>
+                            <td id="vinculacion-nombre-{{@index}}">{{nombreEmpleado}}</td>
+                            <td id="vinculacion-apellido-{{@index}}">{{apellidoEmpleado}}</td>
+                            <td id="vinculacion-documento-{{@index}}">{{documentoEmpleado}}</td>
+                            <td>
+                                <div class="col-md-10">
+                                    <select id="area" name="area" class="form-select" aria-label="Default select">
+                                        <option selected disabled value="">Seleccionar area</option>
+                                        {{#each areas}}
+                                            <option value="{{idArea}}">{{nombreArea}} </option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="submit" id="aceptar-{{@index}}" class="bi bi-check-lg btn btn-outline-success btn-sm aceptar-empleado"></button>
+                                <button type="submit" id="rechazar-{{@index}}" class="bi bi-x-lg btn btn-outline-danger btn-sm rechazar-empleado"></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--FIN MI APP-->
+</div>
+
+{{/partial}}
+{{> base.hbs}}

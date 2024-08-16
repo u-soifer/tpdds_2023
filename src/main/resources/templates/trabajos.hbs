@@ -1,0 +1,80 @@
+{{#partial "contenido"}}
+<!--mis organizaciones-->
+<div class="section">
+    <h5>Mis organizaciones</h5>
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-organizations">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Organización</th>
+                    <th scope="col">Area</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each trabajos}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{razonSocial}}</td>
+                    <td>{{nombreArea}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--mis solicitudes-->
+<div class="section">
+    <h5>Mis solicitudes</h5>
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-requests">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Organización</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each solicitudes}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{razonSocial}}</td>
+                    <td>{{estadoTrabajo}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-success" id="new-request">Nueva solicitud</button>
+</div>
+{{/partial}}
+
+{{#partial "modals"}}
+<div class="modal fade" id="modal_nueva-solicitud" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Nueva solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/trabajos" method="post">
+                <div class="modal-body">
+                        <select name="organizacion" class="form-select" aria-label="Default select example">
+                            <option selected>Organización</option>
+                            {{#each organizaciones}}
+                            <option value="{{id_organizacion}}">{{razonSocial}}</option>
+                            {{/each}}
+                          </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atras</button>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/partial}}
+{{> base.hbs}}

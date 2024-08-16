@@ -1,0 +1,93 @@
+{{#partial "contenido"}}
+<div class="section">
+    <!--MI APP-->
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-registrar-trayectos">
+            <thead>
+            <th scope="col">Nombre</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Telefono</th>
+            <th scope="col"></th>
+            </thead>
+            <tbody>
+            {{#each contactos}}
+                <tr>
+                    <td id="contacto-idContacto-{{@index}}" class="hide-column">{{id_contacto}}</td>
+                    <td id="contacto-nombre-{{@index}}">{{nombre}}</td>
+                    <td id="contacto-mail-{{@index}}">{{mail}}</td>
+                    <td id="contacto-telefono-{{@index}}">{{telefono}}</td>
+                    <td>
+                        <button type="button" id="edit-{{@index}}" class="bi bi-pencil btn btn-outline-primary btn-sm edit-contacto" ></button>
+                        <button type="button" id="del-{{@index}}" class="bi bi-trash btn btn-outline-danger btn-sm del-contacto" ></button>
+                    </td>
+                </tr>
+                <tr>
+            {{/each}}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <button id="agregar-contacto" type="button" class="btn btn-success"> Agregar Contacto </button>
+</div>
+{{/partial}}
+    <!--MAIN-->
+{{#partial "modals"}}
+    <!--MODAL AGREGAR/EDITAR CONTACTO-->
+    <div class="modal fade" id="modalContactos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Agregar Contacto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+              <form action="/contactos" method="post" id="frmContacto">
+            <div class="modal-body">
+              
+                <div class="input-group mb-3">
+                    <input name="nombre" id="nombre" type="text" class="form-control input-texto" placeholder="Nombre y apellido" aria-label="Nombre y apellido" aria-describedby="basic-addon1" required>
+                </div>
+                
+                <div class="input-group mb-3">
+                    <input name="mail" id="mail" type="text" class="form-control input-texto" placeholder="Mail" aria-label="Mail" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3"> 
+                    <input name="telefono" id="telefono" type="text" class="form-control input-texto" placeholder="Telefono" aria-label="Telefono" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    <!--MODAL AGREGAR/EDITAR CONTACTO-->
+
+    <!--MODAL ELIMINAR CONTACTO-->
+    <div class="modal fade" id="modalEliminarContacto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEliminarUbicacion" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea eliminar el contacto <strong id="nombre-contacto">AAA</strong>?
+                </div>
+                <div class="modal-footer">
+                    <form id="frmEliminar" action="/contactos/eliminar/" method="POST">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL ELIMINAR CONTACTO-->
+
+{{/partial}}
+{{> base.hbs}}

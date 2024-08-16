@@ -1,0 +1,112 @@
+{{#partial "contenido"}}
+
+    <div class="section">
+        <h5>Mis Mediciones</h5>
+        <div class="table-responsive">
+            <table class="table table-hover" id="table-organizations">
+                <thead>
+                <tr>
+                    <th scope="col">Consumo</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Distancia</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Producto Transportado</th>
+                    <th scope="col">Medio de Transporte</th>
+                    <th scope="col">Periodicidad</th>
+                    <th scope="col">Periodo de Imputación</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each mediciones}}
+                    <tr>
+                        <td id="organizacion-idMedicion-{{@index}} " class="hide-column">{{idMedicion}}</td>
+                        <td id="organizacion-consumo-{{@index}}" >{{consumoMedicion}}</td>
+                        <td id="organizacion-valor-{{@index}}" >{{valorSimple}}</td>
+                        <td id="organizacion-distancia-{{@index}}" >{{distanciaRecorrida}}</td>
+                        <td id="organizacion-peso-{{@index}}" >{{peso}}</td>
+                        <td id="organizacion-producto-{{@index}}" >{{productoTransportado}}</td>
+                        <td id="organizacion-medioTransporte-{{@index}}" >{{medioTransporte}}</td>
+                        <td id="organizacion-periodicidad-{{@index}}" >{{periodicidadMedicion}}</td>
+                        <td id="organizacion-periodo-{{@index}}" >{{periodoDeImputacionMedicion}}</td>
+                        <td id="organizacion-huella-{{@index}}" class="hide-column">{{huellaCarbonMedicion}}</td>
+                    </tr>
+                    <tr>
+                {{/each}}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button id="cargar-medicion" type="button" class="btn btn-success"> Registrar Mediciones </button>
+    <button id="cargar-medicion2" type="button" class="btn btn-success"> Registrar Mediciones con path absoluto </button>
+    <button id="limpiar-medicion" type="button" class="btn btn-success"> Limpiar Mediciones </button>
+{{/partial}}
+
+{{#partial "modals"}}
+<!--MODAL REGISTRAR MEDICIONES-->
+<div class="modal fade" id="modalRegistrarMediciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar mediciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/mediciones" method="post" id="frmMedicion">
+                <div class="modal-body">
+                    <input name="myFile" id="archMediciones" class="form-control" type="file" accept=".xlsx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="registrar-mediciones" class="btn btn-success">Registrar mediciones</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--MODAL REGISTRAR MEDICIONES-->
+
+<!--MODAL REGISTRAR MEDICIONES2-->
+<div class="modal fade" id="modalRegistrarMediciones2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar mediciones2</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/mediciones" method="post" id="frmMedicion2">
+                <div class="modal-body">
+                    <input name="path" id="path" class="form-control input-texto" type="text" placeholder="path" aria-label="path" aria-describedby="basic-addon1" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Registrar mediciones</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--MODAL REGISTRAR MEDICIONES2-->
+
+
+<!--MODAL LIMPIAR MEDICIONES-->
+<div class="modal fade" id="modalLimpiarMediciones" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLimpiarMediciones" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Limpiar mediciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Esta seguro que desea limpiar las mediciones?
+            </div>
+            <div class="modal-footer">
+                <form id="frmLimpiar" action="/mediciones/limpiar" method="POST">
+                    <button type="submit" class="btn btn-danger">Limpiar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL LIMPIAR MEDICIONES-->
+{{/partial}}
+{{> base.hbs}}

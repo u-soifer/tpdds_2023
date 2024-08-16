@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+    <title>Mi impacto ambiental</title>
+
+    <link rel="icon" href="/img/huella.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/estilos.css">
+    {{#if estilos}}
+    <link rel="stylesheet" href="/css/{{estilos}}">
+    {{/if}}
+
+</head>
+<body>
+
+    <!--NAVBAR-->
+    <nav id='navbar' class="navbar navbar-expand-md navbar-dark fixed-top">
+        <div class="container-fluid navbar-container">
+            <button class="openbtn" onclick="toggle()"><i class="bi bi-list"></i></button>
+            <a class="navbar-brand" href="#">Mi impacto ambiental</a>
+            <div class="collapse navbar-collapse " id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0 navbar-content">
+                    <li class="nav-name-container nav-item dropdown">
+                        <div id="user-panel-navbar" class="user-panel">
+                            <img src="" class="user-image" alt="">
+                            <a class="user-name nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{nombre}}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" id="settings">Ajustes</a></li>
+                                <li><a class="dropdown-item" href="#" id="change-password">Cambiar contrase&ntildea</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/login/logout">Cerrar sesi&oacuten</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--NAVBAR-->
+
+    <!--SIDEBAR-->
+    <div id="mySidebar" class="sidebar">
+        <div class="menu">
+            {{> sidebar.hbs}}
+        </div>
+        <div id="user-panel-sidebar" class="user-panel-sidebar">
+            <div class="username">
+                <img src="" class="user-image" alt="">
+                <label class="" href="#">
+                    <strong>{{nombre}}</strong>
+                </label>
+            </div>
+            <a class="dropdown-item" href="#" id="settings"><i class="bi bi-gear-fill"></i> Ajustes</a>
+            <a class="dropdown-item" href="#" id="change-password"><i class="bi bi-arrow-repeat"></i> Cambiar contrase&ntildea</a>
+            <a class="dropdown-item" href="#"><i class="bi bi-key-fill"></i> Cerrar sesi&oacuten</a>
+            </ul>
+        </div>
+    </div>
+    <!--SIDEBAR-->
+
+    <!--MAIN-->
+    <div id="main">
+        <div class="container">
+            <h3 id="title">T&iacutetulo de aplicaci&oacuten</h3>
+
+            {{#block "contenido"}}
+
+            {{/block}}
+
+        </div>
+    </div>
+    <!--MAIN-->
+
+    {{#block "modals"}}
+
+    {{/block}}
+
+    <!--MODAL CONTRASEÑA-->
+    <div class="modal fade" id="modal_change-password" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Cambiar contrase&ntildea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contrase&ntildea anterior</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Contrase&ntildea nueva</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Repita la nueva contrase&ntildea</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atras</button>
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL CONTRASEÑA-->
+
+    <!--MODAL AJUSTES-->
+    <div class="modal fade" id="modal_settings" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Ajustes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atras</button>
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL AJUSTES-->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+    <script type='text/javascript' src="/js/script.js"></script>
+    {{#if javascript}}
+    <script type='text/javascript' src="/js/{{javascript}}"></script>
+    {{/if}}
+
+
+</body>
+</html>

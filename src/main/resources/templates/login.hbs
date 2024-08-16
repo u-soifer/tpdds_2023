@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="img/huella.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row vertical-center"></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 login-box">
+            <div class="top-form">
+                <div class="login-txt">
+                    <button class="btn btn-default" id="button-back"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+                    <h3 class="text-center">
+                        Iniciar sesión
+                    </h3>
+                </div>
+                <div class="user-image">
+                    <img src="img/huella.png" alt="">
+                </div>
+                <br>
+                <div id="log-in" class="formulario">
+                    <div class="form-group">
+                        <input type="text" id="login-usuario" name="usuario" class="form-control txtbox" placeholder="usuario" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="login-contrasenia" name="contrasenia" class="form-control txtbox" placeholder="contraseña">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" id="login" class="btn btn-primary btn-style">INICIAR SESION</button>
+                        <button type="button" id="load-signup" class="btn btn-primary btn-style">REGISTRARSE</button>
+                    </div>
+                </div>
+                <div id="sign-up">
+                    <center>
+                        <label class="switchBtn">
+                            <input type="checkbox">
+                            <div class="slide round" id="slicer">Agente</div>
+                        </label>
+                    <center>
+                    <div class="form-group">
+                        <input type="text" id="signup-nombre" class="form-control txtbox" placeholder="Juan Carlos" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-apellido" class="form-control txtbox" placeholder="Lopez" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control txtbox" id="signup-tDocumento">
+                          <option>DNI</option>
+                          <option>A</option>
+                          <option>B</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-nDocumento" class="form-control txtbox" placeholder="123456" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="mail" id="signup-mail" class="form-control txtbox" placeholder="jcarlos@mail.com" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="signup-usuario" class="form-control txtbox" placeholder="jcarlos" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signup-password" class="form-control txtbox" placeholder="contraseña">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signup-password-repeat" class="form-control txtbox" placeholder="contraseña">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" id="signup" class="btn btn-primary btn-style">REGISTRARSE</button>
+                    </div>
+                </div>
+                <div id="validation">
+                    <div class="form-group">
+                        <input type="text" id="validate-codigo" class="form-control txtbox" placeholder="111111" autocomplete="off">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" id="validate" class="btn btn-primary btn-style">VALIDAR</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <p><a href="">Forgot password?</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal error-->
+<div class="modal fade" id="modalError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="error-titulo">Error</h4>
+            </div>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-remove error" aria-hidden="true"></span>
+                <br><br>
+                <p id="error-msj">Mensaje<p>
+                <ul id="error-lista"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script type='text/javascript' src="/js/login.js"></script>
+
+</body>
+</html>

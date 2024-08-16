@@ -1,0 +1,15 @@
+/*xs*/
+@media (max-width: 576px){
+    .editbutton{
+        height: 10%;
+    }
+    .title {font-size: 2rem;}
+}
+
+/*sm*/
+@media (min-width: 576px){
+    .editbutton{
+        height: 20%;
+    }
+    .title {font-size: 2.5rem;}
+}

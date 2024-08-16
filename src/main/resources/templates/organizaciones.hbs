@@ -1,0 +1,99 @@
+{{#partial "contenido"}}
+<div class="section">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Razon Social</th>
+                <th scope="col">Tipo de Organizacion</th>
+                <th scope="col">Clasificacion</th>
+                <th scope="col"></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each organizaciones}}
+            <tr>
+                <td id="organizacion-razon-social-{{@index}}">{{razonSocial}}</td>
+                <td id="organizacion-tipo-{{@index}}">{{tipoOrganizacion}}</td>
+                <td id="organizacion-clasificacion-{{@index}}">{{clasificacion}}</td>
+                <td class="btns-composite-2">
+                    <button type="button" id="edit-{{@index}}-{{id_organizacion}}" class="bi bi-pencil btn btn-outline-primary btn-sm editar-organizacion" data-bs-toggle="modal" data-bs-target="#modalOrganizacion"></button>
+                    <button type="button" id="del-{{@index}}-{{id_organizacion}}" class="bi bi-trash btn btn-outline-danger btn-sm borrar-organizacion" data-bs-target="#modalBorrarOrganizacion"></button>
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <button type="button" id="agregar-organizacion" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalOrganizacion">Agregar Organizacion</button>
+{{/partial}}
+
+
+<!--MODAL ORGANIZACION -->
+{{#partial "modals"}}
+    <div class="modal fade" id="modalOrganizacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalOrganizacion" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar organizacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/organizaciones/modificar/{{id_organizacion}}" class="row g-3" id="frmOrganizacion" method="post">
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <label for="organizacion-razon-social" class="form-label"><strong>Razon Social</strong></label>
+                            <input id="organizacion-razon-social" type="text" name="organizacion-razon-social" class="form-control input-texto">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="organizacion-tipo"  class="form-label"><strong>Tipo de organizacion</strong></label>
+                            <select id="organizacion-tipo" name="organizacion-tipo" class="form-select">
+                                <option selected disabled>Seleccionar tipo</option>
+                                {{#each tiposDeOrganizacion}}
+                                <option value="{{id}}">{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="organizacion-clasificacion" class="form-label"><strong>Clasificacion</strong></label>
+                            <select id="organizacion-clasificacion" name="organizacion-clasificacion" class="form-select">
+                                <option selected disabled>Seleccionar clasificacion</option>
+                                {{#each clasificacionesOrganizacion}}
+                                <option value="{{id}}">{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                        <button class="btn btn-success" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <!--MODAL BORRAR ORGANIZACION-->
+        <div class="modal fade" id="modalBorrarOrganizacion">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar organizacion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Esta seguro que desea eliminar la organizacion <strong id="org-razon-social-borrar"></strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <form id="frmBorrar" action="/organizaciones/eliminar/{{id_organizacion}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+{{/partial}}
+{{> base.hbs}}

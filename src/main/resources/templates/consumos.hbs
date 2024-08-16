@@ -1,0 +1,32 @@
+{{#partial "contenido"}}
+
+    <div class="section">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="hide-column">idConsumo</th>
+                        <th scope="col">Tipo de Consumo</th>
+                        <th scope="col">Factor de Emisi&oacuten</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tiposDeConsumo}}
+                    <tr>
+                        <form class="needs-validation" action="/consumos" method="post" novalidate>
+                            <td class="hide-column"><input name="idConsumo" type="text" class="hide-column" value="{{idConsumo}}"></input></td>
+                            <td><label>{{tiposConsumo}}</label></td>
+                            <td><input name="factorEmision" id="factEmis-{{@index}}" type="number" class="form-control" value="{{factorDeEmision}}" required></input></td>
+                            <td class="btns-composite-2">
+                                <button type="submit" id="guardar-{{@index}}" class="bi bi-check-lg btn btn-outline-success btn-sm guardar-consumo"></button>
+                            </td>
+                        </form>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/partial}}
+{{> base.hbs}}

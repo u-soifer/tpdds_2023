@@ -1,0 +1,119 @@
+{{#partial "contenido"}}
+
+{{#if linea}}
+<div class="tabla-obtener-linea">
+    <h5>Complete los datos para obtener las paradas de la linea elegida: </h5>
+</div>
+<form method="POST" class="tabla-obtener-linea">
+    <select id="transporte_seleccionado" name="transporte_seleccionado" class="form-select">
+        <option value="default" selected disabled>Elegir medio de transporte...</option>
+        <option value="subte">Subte</option>
+        <option value="tren">Tren</option>
+        <option value="colectivo">Colectivo</option>
+    </select>
+    <br>
+    <label class="subte">Seleccione una linea de Subte</label>
+    <select name="id_transporte" class="form-select subte">
+        <option selected disabled>Seleccionar...</option>
+        {{#each lineas_subte}}
+            <option name="id_transporte" value="{{id_medioDeTransporte}}">{{linea}}</option>
+        {{/each}}
+    </select>
+    <br class="subte">
+    <label class="tren">Seleccione una linea de Tren</label>
+    <select name="id_transporte" class="form-select tren">
+        <option selected disabled>Seleccionar...</option>
+        {{#each lineas_tren}}
+            <option name="id_transporte" value="{{id_medioDeTransporte}}">{{linea}}</option>
+        {{/each}}
+    </select>
+    <br class="tren">
+    <label class="colectivo">Seleccione una linea de Colectivo</label>
+    <select name="id_transporte" class="form-select colectivo">
+        <option selected disabled>Seleccionar...</option>
+        {{#each lineas_colectivo}}
+            <option name="id_transporte" value="{{id_medioDeTransporte}}">{{linea}}</option>
+        {{/each}}
+    </select>
+    <br class="colectivo">
+    <button type="submit" class="btn btn-success ver-linea">Buscar linea</button>
+</form>
+<div>
+    <br><button id="agregar-linea" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalNuevaLinea"> Agregar nueva linea </button>
+</div>
+
+{{else}}
+    <div>
+<a>Medio de Transporte: {{nombre_medio_de_transporte}}</a><br>
+<a>Linea: {{nombre_de_linea}}</a><br>
+<div class="section">
+    <div class="table-responsive">
+        <table class="table table-hover" id="table-organizations">
+            <thead>
+                <tr>
+                    <th scope="col" class="hide-column">ID</th>
+                    <th scope="col">Calle</th>
+                    <th scope="col">Altura</th>
+                    <th scope="col">Localidad</th>
+                    <th scope="col">Dist. parada anterior</th>
+                    <th scope="col">Dist. parada siguiente</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each paradas}}
+                <form class="needs-validation" action="/medios-de-transporte/editar" method="post" novalidate>
+                <tr>
+                    <td class="hide-column"><input name="id_ubicacion" type="text" class="hide-column" value="{{id_ubicacion}}"></input></td>
+                    <td>{{calle}}</td>
+                    <td>{{altura}}</td>
+                    <td>{{localidadDet}}</td>
+                    <td><input name="distParadaAnterior" type="number" class="form-control" value="{{distanciaParadaAnterior.valor}}" required></input></td>
+                    <td><input name="distParadaSiguiente" type="number" class="form-control" value="{{distanciaParadaSiguiente.valor}}" required></input></td>
+                    <td class="btns-composite-2">
+                        <button type="submit" id="editar-{{@index}}" class="bi bi-check-lg btn btn-outline-success btn-sm editar-parada"></button>
+                    </td>
+                </tr>
+                </form>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div></div>
+{{/if}}
+
+{{/partial}}
+
+{{#partial "modals"}}
+<!--MODAL NUEVA LINEA-->
+<div class="modal fade" id="modalNuevaLinea" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalNuevaLinea" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva linea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/medios-de-transporte/crear" id="frmNuevaLinea" method="post">
+                <div class="modal-body">
+                    <a>Seleccione el medio de Transporte Publico:</a>
+                    <select id="transporte_a_crear" name="transporte_a_crear" class="form-select">
+                        <option value="default" selected disabled>Seleccionar...</option>
+                        <option value="SUBTE">Subte</option>
+                        <option value="TREN">Tren</option>
+                        <option value="COLECTIVO">Colectivo</option>
+                    </select>
+                    <br>
+                    <a>Defina una Linea:</a>
+                    <input class="form-control" type="text" name="nombre_linea_nueva">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                    <button type="submit" class="btn btn-success" >Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/partial}}
+
+{{> base.hbs}}

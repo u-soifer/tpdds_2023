@@ -1,0 +1,60 @@
+{{#partial "contenido"}}
+
+{{#if idSectorTerritorial}}
+<!--SI TIENE SECTOR ASIGNADO-->
+<div>
+    <a><strong>Provincia/Municipio: </strong>{{provinciaOMunicipio}}</a>
+    <div class="section">
+        <div class="table-responsive">
+            <table class="table table-hover" id="table-organizations">
+                <thead>
+                    <tr>
+                        <th scope="col">Organización</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Clasificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each organizaciones}}
+                    <tr>
+                        <td>{{razonSocial}}</td>
+                        <td>{{tipoOrganizacion}}</td>
+                        <td>{{clasificacion}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{else}}
+{{#if sectorSolicitado}}
+<!--SI NO TIENE SECTOR ASIGNADO NI ACEPTADO-->
+<a>Usted ha solicitado un sector territorial.</a><br>
+<a>Cuando se lo acepte, lo podrá ver desde esta pantalla.</a>
+
+{{else}}
+<!--SI NO TIENE SECTOR ASIGNADO-->
+<a>Solicitar alta para un nuevo sector territorial</a>
+<br>
+<br>
+<form method="POST">
+    <div class="form-group">
+        <div class="col-md-12">
+            <select class="form-select" name="sector_territorial">
+                <option selected disabled>Seleccionar sector territorial</option>
+                {{#each sectoresTerritoriales}}<option>{{municipio.nombre}}{{provincia.nombre}}</option>{{/each}}
+            </select>
+        </div>
+        <br>
+        <div>
+            <button type="submit" class="btn btn-success">Solicitar vinculación</button>
+        </div>
+    </div>
+</form>
+{{/if}}
+{{/if}}
+
+{{/partial}}
+{{> base.hbs}}

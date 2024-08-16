@@ -1,0 +1,84 @@
+{{#partial "contenido"}}
+    {{#if empleado}}
+    <div class="section">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Trayecto</th>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Destino</th>
+                        <th scope="col">Distancia</th>
+                        <th scope="col">HC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each trayectos}}
+                    <tr>
+                        <td id="trayectos-{{@index}}">{{nombreTrayecto}}</td>
+                        <td id="origen-{{@index}}">{{origen}}</td>
+                        <td id="destino-{{@index}}">{{destino}}</td>
+                        <td id="distancia-{{@index}}">{{distancia}}</td>
+                        <td id="hc-{{@index}}">{{hc}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h5>HC total: <strong>{{HCtotal}}</strong></h5>
+    {{/if}}
+
+    {{#if organizacion}}
+    <div class="section">
+        <h5>Trayectos</h5>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Area</th>
+                        <th scope="col">Huella de Carbon</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each areas}}
+                    <tr>
+                        <td>{{nombreArea}}</td>
+                        <td>{{huellaCarbon}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h5>HC trayectos total: <strong>{{hcTrayectosTotal}}</strong></h5>
+    <div class="section">
+        <h5>Mediciones</h5>
+        <div class="table-responsive">
+            <table class="table table-hover" id="table-organizations">
+                <thead>
+                <tr>
+                    <th scope="col">Consumo</th>
+                    <th scope="col">Periodicidad</th>
+                    <th scope="col">Periodo de Imputación</th>
+                    <th scope="col">Huella de Carbon</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each mediciones}}
+                    <tr>
+                        <td id="organizacion-consumo-{{@index}}">{{consumoMedicion}}</td>
+                        <td id="organizacion-periodicidad-{{@index}}">{{periodicidadMedicion}}</td>
+                        <td id="organizacion-periodo-{{@index}}">{{periodoDeImputacionMedicion}}</td>
+                        <td id="organizacion-huella-{{@index}}">{{huellaCarbonMedicion}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h5>HC mediciones total: <strong>{{hcMedicionesTotal}}</strong></h5>
+    <h5>HC total: <strong>{{hcTotal}}</strong></h5>
+    {{/if}}
+{{/partial}}
+{{> base.hbs}}

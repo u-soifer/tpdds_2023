@@ -1,0 +1,211 @@
+{{#partial "contenido"}}
+    <!--AGENTE SECTORIAL-->
+    <div class="section">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <h5>Agente sectorial</h5>
+                <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Provincia Asignada</th>
+                    <th scope="col">Municipio Asignado</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each agentesSectoriales}}
+                <tr>
+                    <td id="agente-sectorial-nombre-{{@index}}">{{nombre}}</td>
+                    <td id="agente-sectorial-sector-territorial-{{@index}}">{{sectorTerritorial.provincia.nombre}}</td>
+                    <td id="agente-sectorial-sector-territorial-{{@index}}">{{sectorTerritorial.municipio.nombre}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSolicitudes">Ver solicitudes de nuevos agentes</button>
+    </div>
+
+    <!--SECTOR TERRITORIAL-->
+    <div class="section">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <h5>Sector territorial</h5>
+                <thead>
+                <tr>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Municipio</th>
+                    <th scope="col"></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    {{#each sectoresTerritoriales}}
+                    <tr>
+                        <td id="sector-territorial-provincia-{{@index}}">{{provincia.nombre}}</td>
+                        <td id="sector-territorial-municipio-{{@index}}">{{municipio.nombre}}</td>
+                        <td class="btns-composite-2">
+                            <button type="button" id="edit-{{@index}}-{{id_sectorTerritorial}}" class="bi bi-pencil btn btn-outline-primary btn-sm editar-sector-territorial" data-bs-toggle="modal" data-bs-target="#modalSector"></button>
+                            <button type="button" id="del-{{@index}}-{{id_sectorTerritorial}}" class="bi bi-trash btn btn-outline-danger btn-sm borrar-sector-territorial" data-bs-target="#modalBorrarSectorTerritorial"></button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <button type="button" id="editar-sector-territorial" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSector">Agregar sector territorial</button>
+    </div>
+{{/partial}}
+
+{{#partial "modals"}}
+
+    <!--MODAL VER SOLICITUDES DE NUEVOS AGENTES (AGENTE SECTORIAL)-->
+    <div class="modal fade" id="modalSolicitudes" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalSolicitudes" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSolicitudes">Solicitudes de nuevos agentes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Provincia</th>
+                                <th scope="col">Municipio</th>
+                                <th scope="col">Respuesta</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each agentesPendientes}}
+                                <tr>
+                                    <td>{{nombre}}</td>
+                                    <td>{{sectorTerritorial.provincia.nombre}}</td>
+                                    <td>{{sectorTerritorial.municipio.nombre}}</td>
+                                    <td class="btns-composite-2">
+                                        <button type="button"  id="aceptarSolicitud-{{@index}}-{{id_agenteSectorial}}" class="bi bi-check-lg btn btn-outline-success btn-sm aceptar-solicitud"></button>
+                                        <button type="button" id="rechazarSolicitud-{{@index}}-{{id_agenteSectorial}}" class="bi bi-x-lg btn btn-outline-danger btn-sm rechazar-solicitud" ></button>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atrás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL RECHAZAR SOLICITUD -->
+    <!-- REVISAR-->
+    <div class="modal fade" id="modalRechazarSolicitud">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rechazar solicitud</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea rechazar esta solicitud?
+                </div>
+                <div class="modal-footer">
+                    <form id="frmRechazarSolicitud" action="/agentes-sectoriales/rechazar-solicitud/agente/{{id_agenteSectorial}}" method="POST">
+                        <button type="submit" class="btn btn-danger">Rechazar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL ACEPTAR SOLICITUD -->
+    <div class="modal fade" id="modalAceptarSolicitud">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aceptar solicitud</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea aceptar esta solicitud?
+                </div>
+                <div class="modal-footer">
+                    <form id="frmAceptarSolicitud" action="/agentes-sectoriales/aceptar-solicitud/agente/{{id_agenteSectorial}}" method="POST">
+                        <button type="submit" class="btn btn-success">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL AGREGAR SECTOR TERRITORIAL (ST)-->
+    <div class="modal fade" id="modalSector" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalSector" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSector">Agregar un Sector Territorial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/agentes-sectoriales/crear" class="row g-3" method="post">
+                <div class="modal-body">
+                    <div>
+                    <label class="form-label">Seleccione Provincia o Municipio para el Sector Territorial: </label>
+                        <select id="sector_T" name="sector_T" class="form-select">
+                                <option value="default" selected disabled>Seleccionar...</option>
+                                <option value="provincia">Provincia</option>
+                                <option value="municipio">Municipio</option>
+                        </select>
+                            <label class="form-label provincia"><strong>Provincia</strong></label>
+                            <select id="sector-provincia" name="sector-provincia" class="form-select provincia">
+                                <option selected disabled>Seleccionar provincia</option>
+                                {{#each provincias}}
+                                    <option name="sector-provincia" value="{{idProvincia}}">{{nombreProvincia}}</option>
+                                {{/each}}
+                            </select>
+                            <label class="form-label municipio"><strong>Municipio</strong></label>
+                            <select id="sector-municipio" name="sector-municipio" class="form-select municipio">
+                                <option selected disabled>Seleccionar</option>
+                                {{#each municipios}}
+                                    <option name="sector-municipio" value="{{idMunicipio}}">{{nombre}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Atras</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL BORRAR (ST)-->
+    <div class="modal fade" id="modalBorrarSectorTerritorial">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar sector territorial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Esta seguro que desea eliminar este sector?
+                </div>
+                <div class="modal-footer">
+                    <form id="frmBorrarSectorTerritorial" action="/agentes-sectoriales/eliminar/sector/{{id_sectorTerritorial}}" method="POST">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{/partial}}
+{{> base.hbs}}
